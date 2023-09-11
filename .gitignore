@@ -1,0 +1,4 @@
+/node_modules
+/public/library/3d-flip-book/3d-flip-book/node_modules
+/public/library/3d-flip-book/common/node_modules
+/.env
