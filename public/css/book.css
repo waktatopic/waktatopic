@@ -1,7 +1,39 @@
-body {
-	margin: 0;
-	padding: 0;
-}
 .solid-container {
+	overflow: hidden;
 	height: 100vh;
+}
+
+.fab-container {
+	display: flex;
+	position: fixed;
+	border: 1px solid black;
+	flex-direction: column;
+	right: 0;
+	bottom: 0;
+	margin: 30px;
+}
+
+.fab-container.hidden {
+	display: none;
+}
+
+.fab {
+	width: 100px;
+	height: 100px;
+	background-color: aquamarine;
+	border: 2px solid firebrick;
+	border-radius: 50%;
+	margin: 10px 0;
+}
+
+.fab:first-child {
+	margin: 0 0 10px 0;
+}
+
+.fab:last-child {
+	margin: 10px 0 0 0;
+}
+
+.fab.hidden {
+	display: none;
 }

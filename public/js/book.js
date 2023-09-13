@@ -1,4 +1,4 @@
-$(".solid-container").FlipBook({
+const option = {
 	pdf: "../pdf/test.pdf",
 	template: {
 		html: "../library/3d-flip-book/3d-flip-book/templates/default-book-view.html",
@@ -15,4 +15,11 @@ $(".solid-container").FlipBook({
 			endFlip: "../library/3d-flip-book/3d-flip-book/sounds/end-flip.mp3",
 		},
 	},
-});
+	ready: function (scene) {
+		$(".fab.cmdToc").on("click", function () {
+			console.log("hi");
+		});
+	},
+};
+
+$(".solid-container").FlipBook(option);
