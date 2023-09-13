@@ -16,8 +16,8 @@ const option = {
 		},
 	},
 	ready: function (scene) {
-		$(".fab.cmdToc").on("pointerdown", function () {
-			console.log("hi");
+		$(".fab.toc").on("pointerdown", () => {
+			scene.ctrl.cmdToc();
 		});
 	},
 };
