@@ -16,7 +16,7 @@ const option = {
 		},
 	},
 	ready: function (scene) {
-		$(".fab.cmdToc").on("click", function () {
+		$(".fab.cmdToc").on("pointerdown", function () {
 			console.log("hi");
 		});
 	},
