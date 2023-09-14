@@ -1,21 +1,15 @@
 import "./src/helpers/loadEnv.js";
 import express from "express";
+import homeRoute from "./src/routes/homeRoute.js";
+import bookRoute from "./src/routes/bookRoute.js";
 import path from "path";
-import url from "url";
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const initialPath = path.join(__dirname, "public");
 const app = express();
 
-app.use(express.static(initialPath));
+app.use(express.static(path.join(path.resolve(), "public")));
 
-app.get("/", (req, res) => {
-	res.sendFile(path.join(initialPath, "html", "home.html"));
-});
-
-app.get("/book", (req, res) => {
-	res.sendFile(path.join(initialPath, "html", "book.html"));
-});
+app.use("/", homeRoute);
+app.use("/book", bookRoute);
 
 app.listen(process.env.PORT, () => {
 	console.log(`Listening on PORT ${process.env.PORT}`);
