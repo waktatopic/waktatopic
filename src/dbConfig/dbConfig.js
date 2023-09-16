@@ -1,3 +1,5 @@
+"use strict";
+
 import "./src/helpers/loadEnv.js";
 import mongoose from "mongoose";
 

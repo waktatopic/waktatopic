@@ -11,10 +11,37 @@
 	<body>
 		<div class="fab-container">
 			<div class="fab top">맨위로</div>
-			<div class="fab email">이메일</div>
+			<div class="fab modal-open">이메일</div>
 			<div class="fab dark">다크모드</div>
 			<div class="fab cancel">닫기</div>
 		</div>
+		<div class="modal-container">
+			<div class="modal-content">
+				<form id="email-form">
+					<div>
+						<label>
+							이메일
+							<input type="text" name="email" id="email" />
+						</label>
+					</div>
+					<div>
+						<label>
+							제목
+							<input type="text" name="title" id="title" />
+						</label>
+					</div>
+					<div>
+						<label>
+							내용
+							<input type="text" name="body" id="body" />
+						</label>
+					</div>
+					<button id="email-send">전송</button>
+				</form>
+				<button class="modal-close">닫기</button>
+			</div>
+		</div>
 		<h1>Home Page</h1>
+		<script src="/js/home.js"></script>
 	</body>
 </html>

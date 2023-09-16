@@ -1,7 +1,9 @@
+"use strict";
+
 import "../../src/helpers/loadEnv.js";
 import express from "express";
 import path from "path";
-import bookController from "../controllers/bookController.js";
+// import bookController from "../controllers/bookController.js";
 
 const router = express.Router();
 const publicPath = path.join(path.resolve(), "public");

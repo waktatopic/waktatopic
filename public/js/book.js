@@ -1,3 +1,5 @@
+"use strict";
+
 const option = {
 	pdf: "/pdf/test.pdf",
 	template: {
@@ -15,8 +17,14 @@ const option = {
 			endFlip: "/library/3d-flip-book/3d-flip-book/sounds/end-flip.mp3",
 		},
 	},
+	propertiesCallback: function (props) {
+		props.renderWhileFlipping = true;
+		props.preloadPages = 100;
+		props.pagesForPredicting = 100;
+		return props;
+	},
 	ready: function (scene) {
-		$(".fab.toc").on("pointerdown", () => {
+		$(".fab.toc").on("pointerup", () => {
 			scene.ctrl.cmdToc();
 		});
 	},
