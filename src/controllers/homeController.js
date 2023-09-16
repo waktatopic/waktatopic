@@ -7,7 +7,11 @@ import nodeMailer from "nodemailer";
 const publicPath = path.join(path.resolve(), "public");
 
 function getHome(req, res, next) {
-	res.status(200).sendFile(path.join(publicPath, "html", "home.html"));
+	try {
+		res.status(200).sendFile(path.join(publicPath, "html", "home.html"));
+	} catch (err) {
+		next(err);
+	}
 }
 
 async function postMail(req, res, next) {
@@ -30,9 +34,8 @@ async function postMail(req, res, next) {
 		};
 		await transporter.sendMail(mailOption);
 		res.status(201).json({ message: "email send success" });
-	} catch (error) {
-		console.log(error);
-		res.status(400).json({ message: "email send failed" });
+	} catch (err) {
+		next(err);
 	}
 }
 

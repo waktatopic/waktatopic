@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const BookSchema = mongoose.Schema({
-	name: { type: String, require: true },
+	title: { type: String, require: true },
 	type: { type: String, require: true },
 	pdf: { type: String, require: true },
 	thumbnail: { type: String, require: true },
