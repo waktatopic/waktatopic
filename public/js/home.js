@@ -1,7 +1,5 @@
 "use strict";
 
-import axios from "axios";
-
 const modal = document.querySelector(".modal-container");
 const openModalBtn = document.querySelector(".modal-open");
 const closeModalBtn = document.querySelector(".modal-close");
@@ -23,11 +21,12 @@ async function onEmailSend(e) {
 	const title = e.target["title"].value;
 	const body = e.target["body"].value;
 	try {
-		const res = await axios.post("http://localhost:1234/", {
-			email,
-			title,
-			body,
+		const res = await axios.post("/", {
+			email: email,
+			title: title,
+			body: body,
 		});
+		console.log(res.data.message);
 	} catch (error) {
 		console.log(error);
 	}

@@ -22,11 +22,11 @@ async function postMail(req, res, next) {
 			},
 			secure: true,
 		});
+		console.log(email);
 		const mailOption = {
-			from: email,
 			to: process.env.MAILS_EMAIL,
 			subject: `[왁타토픽 문의 메일]${title}`,
-			text: body,
+			text: `보낸 사람 : ${email}\n메일 내용 : ${body}`,
 		};
 		await transporter.sendMail(mailOption);
 		res.status(201).json({ message: "email send success" });
