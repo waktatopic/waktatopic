@@ -4,6 +4,41 @@ const modal = document.querySelector(".modal-container");
 const openModalBtn = document.querySelector(".modal-open");
 const closeModalBtn = document.querySelector(".modal-close");
 const emailForm = document.querySelector("#email-form");
+const validation = new window.JustValidate("#email-form");
+
+validation
+	.addField("#email", [
+		{
+			rule: "required",
+			errorMessage: "이메일을 입력하세요",
+		},
+		{
+			rule: "email",
+			errorMessage: "이메일이 올바르지 않습니다",
+		},
+	])
+	.addField("#title", [
+		{
+			rule: "required",
+			errorMessage: "제목을 입력하세요",
+		},
+		{
+			rule: "maxLength",
+			value: 100,
+			errorMessage: "글자 수가 너무 많습니다",
+		},
+	])
+	.addField("#body", [
+		{
+			rule: "required",
+			errorMessage: "내용을 입력하세요",
+		},
+		{
+			rule: "maxLength",
+			value: 1000,
+			errorMessage: "글자 수가 너무 많습니다",
+		},
+	]);
 
 openModalBtn.addEventListener("pointerup", () => {
 	modal.style.display = "block";
@@ -27,8 +62,8 @@ async function onEmailSend(e) {
 			body: body,
 		});
 		console.log(res.data.message);
-	} catch (error) {
-		console.log(error);
+	} catch (err) {
+		console.log(err);
 	}
 }
 

@@ -1,5 +1,3 @@
-"use strict";
-
 const urlPath = window.location.pathname.split("/");
 const type = urlPath[2];
 const title = urlPath[3];
