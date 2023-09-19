@@ -1,7 +1,7 @@
-# 설치법
+# 설치
 
 npm run install-all-deps
 
-# 실행법
+# 실행
 
-npm start || npm run dev (with nodemon)
+npm start 또는 npm run dev (with nodemon)
