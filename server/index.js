@@ -1,15 +1,15 @@
-import "./src/helpers/loadEnv.js";
+import "./helpers/loadEnv.js";
 import express from "express";
-import homeRoute from "./src/routes/homeRoute.js";
-import aboutRoute from "./src/routes/aboutRoute.js";
-import bookRoute from "./src/routes/bookRoute.js";
+import homeRoute from "./routes/homeRoute.js";
+import aboutRoute from "./routes/aboutRoute.js";
+import bookRoute from "./routes/bookRoute.js";
 import path from "path";
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(path.resolve(), "public")));
+app.use(express.static(path.join(path.resolve(), "client")));
 
 app.use("/", homeRoute);
 app.use("/about", aboutRoute);

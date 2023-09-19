@@ -1,6 +1,6 @@
 "use strict";
 
-import "../../src/helpers/loadEnv.js";
+import "../helpers/loadEnv.js";
 import express from "express";
 import aboutController from "../controllers/aboutController.js";
 

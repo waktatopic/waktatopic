@@ -4,11 +4,11 @@ import "../helpers/loadEnv.js";
 import path from "path";
 import nodeMailer from "nodemailer";
 
-const publicPath = path.join(path.resolve(), "public");
+const clientPath = path.join(path.resolve(), "client");
 
 function getHome(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(publicPath, "html", "home.html"));
+		res.status(200).sendFile(path.join(clientPath, "html", "home.html"));
 	} catch (err) {
 		next(err);
 	}
@@ -26,7 +26,6 @@ async function postMail(req, res, next) {
 			},
 			secure: true,
 		});
-		console.log(email);
 		const mailOption = {
 			to: process.env.MAILS_EMAIL,
 			subject: `[왁타토픽 문의 메일]${title}`,

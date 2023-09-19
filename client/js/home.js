@@ -1,9 +1,12 @@
 "use strict";
 
+import "../node_modules/axios/dist/axios.js";
+import JustValidate from "../node_modules/just-validate/dist/just-validate.es.js";
+
 const modal = document.querySelector(".modal-container");
 const openModalBtn = document.querySelector(".modal-open");
 const closeModalBtn = document.querySelector(".modal-close");
-const validation = new window.JustValidate("#email-form", {
+const validation = new JustValidate("#email-form", {
 	lockForm: true,
 	validateBeforSubmitting: true,
 });
