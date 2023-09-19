@@ -1,6 +1,7 @@
 import "./src/helpers/loadEnv.js";
 import express from "express";
 import homeRoute from "./src/routes/homeRoute.js";
+import aboutRoute from "./src/routes/aboutRoute.js";
 import bookRoute from "./src/routes/bookRoute.js";
 import path from "path";
 
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(path.resolve(), "public")));
 
 app.use("/", homeRoute);
+app.use("/about", aboutRoute);
 app.use("/book", bookRoute);
 
 app.use((req, res, next) => {

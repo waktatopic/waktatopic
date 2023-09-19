@@ -7,7 +7,6 @@
 		<link rel="icon" href="/img/favicon.ico" />
 		<link rel="stylesheet" href="/css/global.css" />
 		<link rel="stylesheet" href="/css/book.css" />
-		<script src="/js/shareNaver.js" defer></script>
 	</head>
 	<body>
 		<div class="fab-container">
@@ -22,7 +21,13 @@
 		<script src="/library/3d-flip-book/3d-flip-book/js/libs/html2canvas.js"></script>
 		<script src="/library/3d-flip-book/3d-flip-book/js/libs/three.js"></script>
 		<script src="/library/3d-flip-book/3d-flip-book/js/libs/pdf.js"></script>
-		<script src="/js/pdfjsLocale.js"></script>
+		<script type="text/javascript">
+			"use strict";
+			window.PDFJS_LOCALE = {
+				pdfJsWorker: "/library/3d-flip-book/3d-flip-book/js/libs/pdf.worker.js",
+				pdfJsCMapUrl: "/library/3d-flip-book/3d-flip-book/cmaps",
+			};
+		</script>
 		<script src="/library/3d-flip-book/3d-flip-book/js/dist/3dflipbook.js"></script>
 		<script src="/js/book.js"></script>
 	</body>
