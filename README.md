@@ -1,4 +1,7 @@
-1. waktatopic 디렉토리에서 npm install
-2. waktatopic/public/library/3d-flip-book/3d-flip-book 디렉토리에서 npm install 및 npm run build-production
-3. waktatopic/public/library/3d-flip-book/common 디렉토리에서 npm install 및 npm run build-production
-4. waktatopic 디렉토리에서 npm start 혹은 npm run dev(nodemon)
+# 설치법
+
+npm run install-all-deps
+
+# 실행법
+
+npm start || npm run dev (with nodemon)
