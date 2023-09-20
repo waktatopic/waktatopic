@@ -7,7 +7,7 @@ const clientPath = path.join(path.resolve(), "client");
 
 function getAdmin(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "admin.html"));
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "admin.html"));
 	} catch (err) {
 		next(err);
 	}

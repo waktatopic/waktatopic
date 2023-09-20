@@ -1,7 +1,7 @@
 "use strict";
 
-import "../node_modules/axios/dist/axios.js";
-import JustValidate from "../node_modules/just-validate/dist/just-validate.es.js";
+import "/node_modules/axios/dist/axios.js";
+import JustValidate from "/node_modules/just-validate/dist/just-validate.es.js";
 
 const modal = document.querySelector(".modal-container");
 const openModalBtn = document.querySelector(".modal-open");

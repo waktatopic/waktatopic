@@ -4,8 +4,24 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>WAKTATOPIC</title>
+		<link rel="stylesheet" href="/css/admin.css" />
 	</head>
 	<body>
-		<h1>Admin Page</h1>
+		<form id="login-form" autocomplete="off">
+			<div>
+				<label>
+					username
+					<input type="text" name="username" id="username" autocomplete="off" placeholder="username" />
+				</label>
+			</div>
+			<div>
+				<label>
+					password
+					<input type="text" name="password" id="password" autocomplete="off" placeholder="password" />
+				</label>
+			</div>
+			<button id="login-send">로그인</button>
+		</form>
+		<script src="/js/admin.js" type="module"></script>
 	</body>
 </html>
