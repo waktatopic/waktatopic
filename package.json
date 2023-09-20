@@ -4,9 +4,9 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"client-install": "cd client && npm install",
+		"client-install": "concurrently \"cd client && npm install\" \"npm run flipbook-install\" \"cd client && cd library && cd 3d-flip-book && cd 3d-flip-book && npm install \" \"cd client && cd library && cd 3d-flip-book && cd common && npm install \"",
 		"server-install": "cd server && npm install",
-		"install-all-deps": "concurrently \"npm run server-install\" \"npm run server-install\"",
+		"install-all-deps": "concurrently \"npm run client-install\" \"npm run server-install\"",
 		"start": "npm cd server && server.js",
 		"dev": "nodemon cd server && server.js"
 	},
@@ -14,5 +14,8 @@
 	"license": "ISC",
 	"devDependencies": {
 		"nodemon": "^3.0.1"
+	},
+	"dependencies": {
+		"concurrently": "^8.2.1"
 	}
 }
