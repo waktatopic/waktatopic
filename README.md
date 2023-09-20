@@ -1,6 +1,7 @@
 # 설치
 
 npm install
+
 npm run install-all-deps
 
 # 실행
