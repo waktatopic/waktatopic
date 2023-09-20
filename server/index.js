@@ -3,6 +3,7 @@ import express from "express";
 import homeRoute from "./routes/homeRoute.js";
 import aboutRoute from "./routes/aboutRoute.js";
 import bookRoute from "./routes/bookRoute.js";
+import adminRoute from "./routes/adminRoute.js";
 import path from "path";
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.static(path.join(path.resolve(), "client")));
 app.use("/", homeRoute);
 app.use("/about", aboutRoute);
 app.use("/book", bookRoute);
+app.use("/admin", adminRoute);
 
 app.use((req, res, next) => {
 	res.status(404).json({ message: "404 Not Found" });
