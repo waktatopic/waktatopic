@@ -3,7 +3,7 @@
 import mongoose from "mongoose";
 
 const BannerSchema = mongoose.Schema({
-	banner: { type: String, require: true },
+	banner: { type: String, require: [true, "banner image required"] },
 	link: { type: String, require: true, default: "" },
 });
 

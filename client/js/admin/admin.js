@@ -1,11 +1,9 @@
 "use strict";
 
-const validation = new JustValidate("#login-form", {
+new JustValidate("#login-form", {
 	lockForm: true,
 	validateBeforSubmitting: true,
-});
-
-validation
+})
 	.addField("#username", [
 		{
 			rule: "required",
@@ -22,12 +20,12 @@ validation
 		const username = e.target["username"].value;
 		const password = e.target["password"].value;
 		try {
-			const res = await axios.post("/admin", {
+			const res = await axios.post("/admin/login", {
 				username: username,
 				password: password,
 			});
 			console.log(res.data.message);
 		} catch (err) {
-			console.log(err);
+			console.log(err.response.data.message);
 		}
 	});

@@ -1,6 +1,6 @@
 "use strict";
 
-import "../helpers/loadEnv.js";
+import "../utils/loadEnv.js";
 import mongoose from "mongoose";
 
 export default async function connect() {

@@ -1,6 +1,6 @@
 "use strict";
 
-import "../helpers/loadEnv.js";
+import "../utils/loadEnv.js";
 import express from "express";
 import bookController from "../controllers/bookController.js";
 
