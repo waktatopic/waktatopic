@@ -25,23 +25,23 @@ const postLogin = asyncErrorHandler(async (req, res, next) => {
 		throw error;
 	}
 	const pwCompare = await bcrypt.compare(password, user[0].password);
-	if (pwCompare) {
-		const tokenSecret = process.env.TOKEN_SECRET;
-		const token = jwt.sign(
-			{
-				type: "JWT",
-				username: username,
-			},
-			tokenSecret,
-			{
-				expiresIn: "1h",
-			}
-		);
-		res.status(201).json({ message: "로그인 성공", token: token });
-	} else {
+	if (!pwCompare) {
 		const error = new CustomError("Check your PW", 400);
 		throw error;
+	} else {
 	}
+	const tokenSecret = process.env.TOKEN_SECRET;
+	const token = jwt.sign(
+		{
+			type: "JWT",
+			username: username,
+		},
+		tokenSecret,
+		{
+			expiresIn: "1h",
+		}
+	);
+	res.status(201).json({ message: "로그인 성공", token: token });
 });
 
 export default { getAdmin, postLogin };

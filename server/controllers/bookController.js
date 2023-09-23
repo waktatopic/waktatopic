@@ -13,7 +13,7 @@ const getBook = asyncErrorHandler(async (req, res, next) => {
 	if (fs.existsSync(path.join(clientPath, "pdf", type, `${name}.pdf`))) {
 		res.status(200).sendFile(path.join(clientPath, "html", "book.html"));
 	} else {
-		const error = new CustomError("Book Not Found", 404);
+		const error = new CustomError("페이지를 찾을 수 없습니다. 주소를 확인해주세요", 404);
 		throw error;
 	}
 });
