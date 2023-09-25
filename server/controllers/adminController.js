@@ -22,28 +22,28 @@ function getAdmin(req, res, next) {
 
 function getPannel(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "pannel.html"));
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel.html"));
 	} catch (error) {
 		next(error);
 	}
 }
 function getBannerPannel(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "bannerPannel.html"));
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "bannerPannel.html"));
 	} catch (error) {
 		next(error);
 	}
 }
 function getBookPannel(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "bookPannel.html"));
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "bookPannel.html"));
 	} catch (error) {
 		next(error);
 	}
 }
 function getProfilePannel(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "profilePannel.html"));
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "profilePannel.html"));
 	} catch (error) {
 		next(error);
 	}
