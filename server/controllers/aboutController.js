@@ -2,12 +2,15 @@
 
 import "../utils/loadEnv.js";
 import path from "path";
-import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 
 const clientPath = path.join(path.resolve(), "client");
 
-const getAbout = asyncErrorHandler(async (req, res, next) => {
-	res.status(200).sendFile(path.join(clientPath, "html", "about.html"));
-});
+function getAbout(req, res, next) {
+	try {
+		res.status(200).sendFile(path.join(clientPath, "html", "about.html"));
+	} catch (error) {
+		next(error);
+	}
+}
 
 export default { getAbout };

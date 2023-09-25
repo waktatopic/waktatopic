@@ -7,41 +7,68 @@ import jwt from "jsonwebtoken";
 import dbConfig from "../dbConfig/dbConfig.js";
 import Admin from "../models/adminModel.js";
 import CustomError from "../utils/CustomError.js";
-import asyncErrorHandler from "../utils/asyncErrorHandler.js";
 
 dbConfig();
 
 const clientPath = path.join(path.resolve(), "client");
 
-const getAdmin = asyncErrorHandler(async (req, res, next) => {
-	res.status(200).sendFile(path.join(clientPath, "html", "admin", "admin.html"));
-});
+function getAdmin(req, res, next) {
+	try {
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "admin.html"));
+	} catch (error) {
+		next(error);
+	}
+}
 
-const postLogin = asyncErrorHandler(async (req, res, next) => {
-	const { username, password } = req.body;
-	const user = await Admin.find({ username: username });
-	if (user.length === 0) {
-		const error = new CustomError("Check your ID", 400);
-		throw error;
+function getPannel(req, res, next) {
+	try {
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "pannel.html"));
+	} catch (error) {
+		next(error);
 	}
-	const pwCompare = await bcrypt.compare(password, user[0].password);
-	if (!pwCompare) {
-		const error = new CustomError("Check your PW", 400);
-		throw error;
-	} else {
+}
+function getBannerPannel(req, res, next) {
+	try {
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "bannerPannel.html"));
+	} catch (error) {
+		next(error);
 	}
-	const tokenSecret = process.env.TOKEN_SECRET;
-	const token = jwt.sign(
-		{
-			type: "JWT",
-			username: username,
-		},
-		tokenSecret,
-		{
-			expiresIn: "1h",
+}
+function getBookPannel(req, res, next) {
+	try {
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "bookPannel.html"));
+	} catch (error) {
+		next(error);
+	}
+}
+function getProfilePannel(req, res, next) {
+	try {
+		res.status(200).sendFile(path.join(clientPath, "html", "admin", "pannel", "profilePannel.html"));
+	} catch (error) {
+		next(error);
+	}
+}
+
+async function postLogin(req, res, next) {
+	try {
+		const { username, password } = req.body;
+		const user = await Admin.findOne({ username: username });
+		if (!user) {
+			const error = new CustomError("아이디를 확인해주세요", 400);
+			throw error;
 		}
-	);
-	res.status(201).json({ message: "로그인 성공", token: token });
-});
+		const pwCompare = await bcrypt.compare(password, user.password);
+		if (!pwCompare) {
+			const error = new CustomError("비밀번호를 확인해주세요", 400);
+			throw error;
+		} else {
+		}
+		const token = jwt.sign({ username: user.username }, process.env.TOKEN_SECRET, { expiresIn: "3h" });
+		res.cookie("token", token, { httpOnly: true, secure: true });
+		res.status(201).json({ status: "success", message: "로그인 성공" });
+	} catch (error) {
+		next(error);
+	}
+}
 
-export default { getAdmin, postLogin };
+export default { getAdmin, getPannel, getBannerPannel, getBookPannel, getProfilePannel, postLogin };

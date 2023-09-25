@@ -1,9 +1,5 @@
 "use strict";
 
-async function getBook() {
-	axios.get("/book");
-}
-
 const urlPath = window.location.pathname.split("/");
 const type = urlPath[2];
 const title = urlPath[3];
