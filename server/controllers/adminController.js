@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dbConfig from "../dbConfig/dbConfig.js";
 import Admin from "../models/adminModel.js";
+import Book from "../models/bookModel.js";
 import CustomError from "../utils/CustomError.js";
 
 dbConfig();
@@ -27,6 +28,7 @@ function getPannel(req, res, next) {
 		next(error);
 	}
 }
+
 function getBannerPannel(req, res, next) {
 	try {
 		res.status(200).sendFile(path.join(clientPath, "html", "admin", "bannerPannel.html"));
@@ -34,6 +36,7 @@ function getBannerPannel(req, res, next) {
 		next(error);
 	}
 }
+
 function getBookPannel(req, res, next) {
 	try {
 		res.status(200).sendFile(path.join(clientPath, "html", "admin", "bookPannel.html"));
@@ -41,6 +44,24 @@ function getBookPannel(req, res, next) {
 		next(error);
 	}
 }
+
+async function getBookList(req, res, next) {
+	try {
+		const bookList = await Book.find();
+		res.status(200).json({ status: "success", bookList: bookList });
+	} catch (error) {
+		next(error);
+	}
+}
+
+async function postBookList(req, res, next) {
+	try {
+		res.status(200).json({ status: "success", message: "니가 원한게 이거냐?" });
+	} catch (error) {
+		next(error);
+	}
+}
+
 function getProfilePannel(req, res, next) {
 	try {
 		res.status(200).sendFile(path.join(clientPath, "html", "admin", "profilePannel.html"));
@@ -71,4 +92,13 @@ async function postLogin(req, res, next) {
 	}
 }
 
-export default { getAdmin, getPannel, getBannerPannel, getBookPannel, getProfilePannel, postLogin };
+export default {
+	getAdmin,
+	getPannel,
+	getBannerPannel,
+	getBookPannel,
+	getBookList,
+	postBookList,
+	getProfilePannel,
+	postLogin,
+};
