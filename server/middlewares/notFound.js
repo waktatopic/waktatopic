@@ -1,3 +1,5 @@
+"use strict";
+
 import CustomError from "../utils/CustomError.js";
 
 function notFound(req, res, next) {

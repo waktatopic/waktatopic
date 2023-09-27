@@ -1,3 +1,5 @@
+"use strict";
+
 import "../utils/loadEnv.js";
 import jwt from "jsonwebtoken";
 import CustomError from "../utils/CustomError.js";

@@ -4,6 +4,8 @@ import "../utils/loadEnv.js";
 import path from "path";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import pdf2img from "pdf-img-convert";
+import fs from "fs";
 import dbConfig from "../dbConfig/dbConfig.js";
 import Admin from "../models/adminModel.js";
 import Book from "../models/bookModel.js";
@@ -47,6 +49,15 @@ function getBookPannel(req, res, next) {
 
 async function getBookList(req, res, next) {
 	try {
+		// const pdfArray = await pdf2img.convert("/Users/Young/Desktop/waktatopic/client/pdf/weeklywak/test.pdf", {
+		// 	page_numbers: [1],
+		// 	scale: 0.4,
+		// });
+		// fs.writeFile("/Users/Young/Desktop/output1.png", pdfArray[0], (error) => {
+		// 	if (error) {
+		// 		console.log(error);
+		// 	}
+		// });
 		const bookList = await Book.find();
 		res.status(200).json({ status: "success", bookList: bookList });
 	} catch (error) {
@@ -56,7 +67,8 @@ async function getBookList(req, res, next) {
 
 async function postBookList(req, res, next) {
 	try {
-		res.status(200).json({ status: "success", message: "니가 원한게 이거냐?" });
+		const file = req.file;
+		res.status(200).json({ status: "success", message: "업로드 완료" });
 	} catch (error) {
 		next(error);
 	}
