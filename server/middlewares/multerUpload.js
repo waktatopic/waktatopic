@@ -1,10 +1,12 @@
 "use strict";
 
 import multer from "multer";
+import path from "path";
 
 const fileStorge = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, "files/");
+		const { form, type } = req.body;
+		cb(null, path.join(req.app.get("clientPath"), "src", form, type, path.sep));
 	},
 	filename: (req, file, cb) => {
 		cb(null, file.originalname);

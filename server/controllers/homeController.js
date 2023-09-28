@@ -5,11 +5,9 @@ import path from "path";
 import nodeMailer from "nodemailer";
 import CustomError from "../utils/CustomError.js";
 
-const clientPath = path.join(path.resolve(), "client");
-
 function getHome(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "home.html"));
+		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "home.html"));
 	} catch (error) {
 		next(error);
 	}

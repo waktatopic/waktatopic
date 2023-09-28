@@ -15,7 +15,7 @@ router.get("/pannel/book", tokenAuth, adminController.getBookPannel);
 router
 	.route("/pannel/book/list")
 	.get(tokenAuth, adminController.getBookList)
-	.post(tokenAuth, multerUpload.single("file"), adminController.postBookList);
+	.post(tokenAuth, multerUpload.single("files"), adminController.postBookList);
 router.get("/pannel/profile", tokenAuth, adminController.getProfilePannel);
 router.post("/login", adminController.postLogin);
 

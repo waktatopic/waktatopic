@@ -34,6 +34,12 @@ new JustValidate("#book-post-form", {
 	lockForm: true,
 	validateBeforSubmitting: true,
 })
+	.addField("#book-title", [
+		{
+			rule: "required",
+			message: "제목을 입력하세요",
+		},
+	])
 	.addField("#book-file", [
 		{
 			rule: "minFilesCount",
@@ -57,7 +63,15 @@ new JustValidate("#book-post-form", {
 	])
 	.onSuccess(async (e) => {
 		const formData = new FormData();
-		formData.append("file", e.target["book-file"].files[0]);
+		formData.append("form", "pdf");
+		formData.append("title", e.target["book-title"].value);
+		formData.append("type", e.target["book-type"].value);
+		formData.append("keyword", e.target["book-keyword"].value);
+		formData.append("cafe", e.target["book-cafe"].value);
+		formData.append("showTime", e.target["book-show-time"].value);
+		formData.append("showDate", e.target["book-show-date"].value);
+		formData.append("uploadDate", e.target["book-upload-date"].value);
+		formData.append("files", e.target["book-file"].files[0]);
 		try {
 			const res = await axios.post("/admin/pannel/book/list", formData, {
 				headers: {
@@ -66,12 +80,12 @@ new JustValidate("#book-post-form", {
 			});
 			console.log(res.data.message);
 		} catch (error) {
-			console.log(err.response.data.message);
+			console.log(error.response.data.message);
 		}
 	});
 
 function getDir(form, type, title) {
 	let ext;
-	form === "pdf" ? (ext = "pdf") : (ext = "jpg");
-	return `/${form}/${type}/${title}.${ext}`;
+	form === "pdf" ? (ext = "pdf") : (ext = "png");
+	return `/src/${form}/${type}/${title}.${ext}`;
 }
