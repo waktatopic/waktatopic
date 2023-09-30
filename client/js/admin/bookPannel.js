@@ -13,7 +13,7 @@ async function getBookList() {
 			const listItem = document.createElement("div");
 			listItem.className = "list-item";
 			listItem.innerHTML = `
-				<img src="${getDir("thumbnail", book.type, book.title)}" />
+				<img src="/src/thumbnail/${book.type}/${book.title}.png" />
 				<p>${book.name}</p>
 			`;
 			listItem.addEventListener("pointerup", () => {
@@ -30,31 +30,6 @@ function onBookClick(book) {
 	const prevForm = document.querySelector("#book-edit-form");
 	if (prevForm) prevForm.remove();
 	createBookForm("edit", book);
-	new JustValidate("#book-edit-form", { lockForm: true, validateBeforSubmitting: true })
-		.addField("#book-title", [{ rule: "required", message: "제목을 입력하세요" }])
-		.addField("#book-file", [
-			{ rule: "files", value: { files: { extensions: ["pdf"] } }, message: "pdf파일을 넣어주세요" },
-		])
-		.onSuccess(async (e) => {
-			e.submitter.id === "book-put" ? putBookList(e) : deleteBookList(e);
-		});
-}
-
-new JustValidate("#book-post-form", { lockForm: true, validateBeforSubmitting: true })
-	.addField("#book-title", [{ rule: "required", message: "제목을 입력하세요" }])
-	.addField("#book-file", [
-		{ rule: "minFilesCount", value: 1, message: "파일을 넣어주세요" },
-		{ rule: "maxFilesCount", value: 1, message: "파일을 하나만 넣어주세요" },
-		{ rule: "files", value: { files: { extensions: ["pdf"] } }, message: "pdf파일을 넣어주세요" },
-	])
-	.onSuccess(async (e) => {
-		postBookList(e);
-	});
-
-function getDir(form, type, title) {
-	let ext;
-	form === "pdf" ? (ext = "pdf") : (ext = "png");
-	return `/src/${form}/${type}/${title}.${ext}`;
 }
 
 async function postBookList(e) {
@@ -150,5 +125,20 @@ async function createBookForm(method, book) {
 	</div>
 `;
 	document.body.append(bookForm);
-	if (method === "edit") document.querySelector(`#book-edit-form option[value="${book.type}"]`).selected = true;
+	if (method !== "post") document.querySelector(`#book-edit-form option[value="${book.type}"]`).selected = true;
+	new JustValidate(`#${bookForm.id}`, { lockForm: true, validateBeforSubmitting: true })
+		.addField("#book-title", [{ rule: "required", message: "제목을 입력하세요" }])
+		.addField(
+			"#book-file",
+			method === "post"
+				? [
+						{ rule: "minFilesCount", value: 1, message: "파일을 넣어주세요" },
+						{ rule: "maxFilesCount", value: 1, message: "파일을 하나만 넣어주세요" },
+						{ rule: "files", value: { files: { extensions: ["pdf"] } }, message: "pdf파일을 넣어주세요" },
+				  ]
+				: [{ rule: "files", value: { files: { extensions: ["pdf"] } }, message: "pdf파일을 넣어주세요" }]
+		)
+		.onSuccess(async (e) => {
+			method === "post" ? postBookList(e) : e.submitter.id === "book-put" ? putBookList(e) : deleteBookList(e);
+		});
 }
