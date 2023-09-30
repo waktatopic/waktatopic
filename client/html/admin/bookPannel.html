@@ -12,63 +12,64 @@
 		<a href="/admin/pannel/banner">배너 관리</a>
 		<a href="/admin/pannel/book">잡지 관리</a>
 		<a href="/admin/pannel/profile">프로필 관리</a>
-		<form id="book-post-form">
-			<div>
-				<label>
-					제목
-					<input type="text" id="book-title" name="book-title" />
-				</label>
-			</div>
-			<div>
-				<label>
-					타입
-					<select id="book-type" name="book-type">
-						<option value="weeklywak">주간왁물원</option>
-						<option value="shonenwakdu">소년왁두</option>
-						<option value="gamekinga">게임킹아</option>
-						<option value="special">특집호</option>
-					</select>
-				</label>
-			</div>
-			<div>
-				<label>
-					키워드
-					<input type="text" id="book-keyword" name="book-keyword" />
-				</label>
-			</div>
-			<div>
-				<label>
-					카페 링크
-					<input type="text" id="book-cafe" name="book-cafe" />
-				</label>
-			</div>
-			<div>
-				<label>
-					공개 날짜
-					<input type="date" id="book-show-date" name="book-show-date" />
-				</label>
-				<label>
-					공개 시간
-					<input type="time" id="book-show-time" name="book-show-time" />
-				</label>
-			</div>
-			<div>
-				<label>
-					업로드 날짜
-					<input type="date" id="book-upload-date" name="book-upload-date" />
-				</label>
-			</div>
-			<div>
-				<label>
-					pdf파일
-					<input type="file" id="book-file" name="book-file" />
-				</label>
-			</div>
-			<div>
-				<button id="book-post">업로드</button>
-			</div>
-		</form>
-		<div class="book-put-container"></div>
+		<div id="post-form-container">
+			<form id="book-post-form">
+				<div>
+					<label>
+						제목
+						<input type="text" id="book-title" name="book-title" />
+					</label>
+				</div>
+				<div>
+					<label>
+						타입
+						<select id="book-type" name="book-type">
+							<option value="weeklywak">주간왁물원</option>
+							<option value="shonenwakdu">소년왁두</option>
+							<option value="gamekinga">게임킹아</option>
+							<option value="special">특집호</option>
+						</select>
+					</label>
+				</div>
+				<div>
+					<label>
+						키워드
+						<input type="text" id="book-keyword" name="book-keyword" />
+					</label>
+				</div>
+				<div>
+					<label>
+						카페 링크
+						<input type="text" id="book-cafe" name="book-cafe" />
+					</label>
+				</div>
+				<div>
+					<label>
+						공개 날짜
+						<input type="date" id="book-show-date" name="book-show-date" />
+					</label>
+					<label>
+						공개 시간
+						<input type="time" id="book-show-time" name="book-show-time" />
+					</label>
+				</div>
+				<div>
+					<label>
+						업로드 날짜
+						<input type="date" id="book-upload-date" name="book-upload-date" />
+					</label>
+				</div>
+				<div>
+					<label>
+						pdf파일
+						<input type="file" id="book-file" name="book-file" />
+					</label>
+				</div>
+				<div>
+					<button id="book-post">업로드</button>
+				</div>
+			</form>
+		</div>
 		<div class="list-container"></div>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>

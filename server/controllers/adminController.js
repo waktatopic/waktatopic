@@ -47,8 +47,24 @@ function getBookPannel(req, res, next) {
 
 async function getBookList(req, res, next) {
 	try {
-		const bookList = await Book.find();
-		res.status(200).json({ status: "success", bookList: bookList });
+		const bookList = await Book.find().lean();
+		const newBookList = bookList.map((book) => {
+			return (book = {
+				name: `${
+					book.type === "weeklywak" ? "주간왁물원" : book.type === "shonenwakdu" ? "소년왁두" : "특집호"
+				} ${book.title}`,
+				title: book.title,
+				type: book.type,
+				keyword: book.keyword,
+				cafe: book.cafe,
+				viewCount: book.viewCount,
+				showDate: book.showAt.toISOString().substr(0, 10),
+				showTime: book.showAt.toISOString().substr(11, 5),
+				uploadDate: book.uploadDate.toISOString().substr(0, 10),
+			});
+		});
+
+		res.status(200).json({ status: "success", bookList: newBookList });
 	} catch (error) {
 		next(error);
 	}
@@ -92,7 +108,7 @@ async function postBookList(req, res, next) {
 
 function getProfilePannel(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(clientPath, "html", "admin", "profilePannel.html"));
+		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "profilePannel.html"));
 	} catch (error) {
 		next(error);
 	}
