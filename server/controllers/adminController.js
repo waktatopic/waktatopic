@@ -51,7 +51,13 @@ async function getBookList(req, res, next) {
 		const newBookList = bookList.map((book) => {
 			return (book = {
 				name: `${
-					book.type === "weeklywak" ? "주간왁물원" : book.type === "shonenwakdu" ? "소년왁두" : "특집호"
+					book.type === "weeklywak"
+						? "주간왁물원"
+						: book.type === "shonenwakdu"
+						? "소년왁두"
+						: book.type === "gamekinga"
+						? "게임킹아"
+						: "특집호"
 				} ${book.title}`,
 				title: book.title,
 				type: book.type,
