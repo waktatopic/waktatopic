@@ -1,6 +1,7 @@
 "use strict";
 
 const listContainer = document.querySelector(".list-container");
+const bookPutcontainer = document.querySelector(".book-put-container");
 
 getBookList();
 
@@ -27,7 +28,75 @@ async function getBookList() {
 }
 
 function onBookClick(book) {
-	console.log(book);
+	const showDate = book.showAt.substr(0, 10);
+	const showTime = book.showAt.substr(11, 5);
+	const uploadDate = book.uploadDate.substr(0, 10);
+	const bookPutForm = document.createElement("div");
+	bookPutForm.innerHTML = `
+	<form id="book-put-form">
+		<div>
+			<label>
+				제목
+				<input type="text" id="book-title" name="book-title" value="${book.title}" />
+			</label>
+		</div>
+		<div>
+			<label>
+				타입
+				<select id="book-type" name="book-type">
+					<option value="weeklywak">주간왁물원</option>
+					<option value="shonenwakdu">소년왁두</option>
+					<option value="gamekinga">게임킹아</option>
+					<option value="special">특집호</option>
+				</select>
+			</label>
+		</div>
+		<div>
+			<label>
+				키워드
+				<input type="text" id="book-keyword" name="book-keyword" value="${book.keyword.join()}"/>
+			</label>
+		</div>
+		<div>
+			<label>
+				카페 링크
+				<input type="text" id="book-cafe" name="book-cafe" value="${book.cafe}"/>
+			</label>
+		</div>
+		<div>
+			<label>
+				공개 날짜
+				<input type="date" id="book-show-date" name="book-show-date" value="${showDate}"/>
+			</label>
+			<label>
+				공개 시간
+				<input type="time" id="book-show-time" name="book-show-time" value="${showTime}" />
+			</label>
+		</div>
+		<div>
+			<label>
+				업로드 날짜
+				<input type="date" id="book-upload-date" name="book-upload-date" value="${uploadDate}" />
+			</label>
+		</div>
+		<div>
+			<label>
+				pdf파일
+				<input type="file" id="book-file" name="book-file" />
+			</label>
+		</div>
+		<div>
+			<button id="book-put">수정</button>
+			<button id="book-delete">삭제</button>
+		</div>
+	<form/>
+	`;
+
+	const bookgong = document.querySelector(".book-put-container div");
+	if (bookgong) bookgong.remove();
+	bookPutcontainer.append(bookPutForm);
+	const option = document.querySelector(`#book-put-form option[value="${book.type}"]`);
+	option.selected = true;
 }
 
 new JustValidate("#book-post-form", {
