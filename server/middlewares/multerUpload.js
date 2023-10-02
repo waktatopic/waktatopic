@@ -9,7 +9,7 @@ const fileStorge = multer.diskStorage({
 		cb(null, path.join(req.app.get("clientPath"), "src", form, type, path.sep));
 	},
 	filename: (req, file, cb) => {
-		cb(null, file.originalname);
+		cb(null, `${req.body.title}.${req.body.form}`);
 	},
 });
 const multerUpload = multer({

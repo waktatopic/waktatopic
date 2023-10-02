@@ -78,9 +78,9 @@ async function getBookList(req, res, next) {
 
 async function postBookList(req, res, next) {
 	try {
-		const { form, title, type, keyword, cafe, showTime, showDate, uploadDate } = req.body;
+		const { title, type, keyword, cafe, showTime, showDate, uploadDate } = req.body;
 		const pdfArray = await pdf2img.convert(
-			path.join(req.app.get("clientPath"), "src", form, type, `${title}.pdf`),
+			path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`),
 			{
 				page_numbers: [1],
 				scale: 0.4,
@@ -95,7 +95,6 @@ async function postBookList(req, res, next) {
 				}
 			}
 		);
-
 		const keywordArray = keyword ? keyword.split(",") : [];
 		const showAt = showDate && showTime ? Date.parse(`${showDate},${showTime}`) : Date.now();
 		const bookCreated = await Book.create({
@@ -107,6 +106,44 @@ async function postBookList(req, res, next) {
 			uploadDate: uploadDate,
 		});
 		res.status(200).json({ status: "success", message: `${bookCreated} 생성 완료` });
+	} catch (error) {
+		next(error);
+	}
+}
+
+async function putBookList(req, res, next) {
+	try {
+		const { title, type, keyword, cafe, showTime, showDate, uploadDate } = req.body;
+		const pdfArray = await pdf2img.convert(
+			path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`),
+			{
+				page_numbers: [1],
+				scale: 0.4,
+			}
+		);
+		fs.writeFile(
+			path.join(req.app.get("clientPath"), "src", "thumbnail", type, `${title}.png`),
+			pdfArray[0],
+			(error) => {
+				if (error) {
+					console.log(error);
+				}
+			}
+		);
+		const keywordArray = keyword ? keyword.split(",") : [];
+		const showAt = showDate && showTime ? Date.parse(`${showDate},${showTime}`) : Date.now();
+		const bookUpdated = await Book.findOneAndUpdate(
+			{ title: title, type: type },
+			{
+				title: title,
+				type: type,
+				keyword: keywordArray,
+				cafe: cafe || "https://cafe.naver.com/steamindiegame",
+				showAt: showAt,
+				uploadDate: uploadDate,
+			}
+		);
+		res.status(200).json({ status: "success", message: `${bookUpdated} 수정 완료` });
 	} catch (error) {
 		next(error);
 	}
@@ -149,6 +186,7 @@ export default {
 	getBookPannel,
 	getBookList,
 	postBookList,
+	putBookList,
 	getProfilePannel,
 	postLogin,
 };

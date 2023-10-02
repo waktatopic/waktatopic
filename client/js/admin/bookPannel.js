@@ -54,7 +54,24 @@ async function postBookList(e) {
 }
 
 async function putBookList(e) {
-	console.log("put");
+	const formData = new FormData();
+	formData.append("form", "pdf");
+	formData.append("title", e.target["book-title"].value);
+	formData.append("type", e.target["book-type"].value);
+	formData.append("keyword", e.target["book-keyword"].value);
+	formData.append("cafe", e.target["book-cafe"].value);
+	formData.append("showTime", e.target["book-show-time"].value);
+	formData.append("showDate", e.target["book-show-date"].value);
+	formData.append("uploadDate", e.target["book-upload-date"].value);
+	formData.append("files", e.target["book-file"].files[0]);
+	try {
+		const res = await axios.put("/admin/pannel/book/list", formData, {
+			headers: { "Content-Type": "multipart/form-data" },
+		});
+		console.log(res.data.message);
+	} catch (error) {
+		console.log(error.response.data.message);
+	}
 }
 
 async function deleteBookList(e) {
@@ -127,17 +144,12 @@ async function createBookForm(method, book) {
 	document.body.append(bookForm);
 	if (method !== "post") document.querySelector(`#book-edit-form option[value="${book.type}"]`).selected = true;
 	new JustValidate(`#${bookForm.id}`, { lockForm: true, validateBeforSubmitting: true })
-		.addField("#book-title", [{ rule: "required", message: "제목을 입력하세요" }])
-		.addField(
-			"#book-file",
-			method === "post"
-				? [
-						{ rule: "minFilesCount", value: 1, message: "파일을 넣어주세요" },
-						{ rule: "maxFilesCount", value: 1, message: "파일을 하나만 넣어주세요" },
-						{ rule: "files", value: { files: { extensions: ["pdf"] } }, message: "pdf파일을 넣어주세요" },
-				  ]
-				: [{ rule: "files", value: { files: { extensions: ["pdf"] } }, message: "pdf파일을 넣어주세요" }]
-		)
+		.addField("#book-title", [{ rule: "required", errorMessage: "제목을 입력하세요" }])
+		.addField("#book-file", [
+			{ rule: "minFilesCount", value: 1, errorMessage: "파일을 넣어주세요" },
+			{ rule: "maxFilesCount", value: 1, errorMessage: "파일을 하나만 넣어주세요" },
+			{ rule: "files", value: { files: { extensions: ["pdf"] } }, errorMessage: "pdf파일을 넣어주세요" },
+		])
 		.onSuccess(async (e) => {
 			method === "post" ? postBookList(e) : e.submitter.id === "book-put" ? putBookList(e) : deleteBookList(e);
 		});
