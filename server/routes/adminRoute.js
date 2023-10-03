@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.get("/", tokenAuth, adminController.getAdmin);
 router.get("/pannel", tokenAuth, adminController.getPannel);
-router.get("/pannel/banner", tokenAuth, adminController.getBannerPannel);
 router.get("/pannel/book", tokenAuth, adminController.getBookPannel);
 router
 	.route("/pannel/book/list")

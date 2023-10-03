@@ -29,14 +29,6 @@ function getPannel(req, res, next) {
 	}
 }
 
-function getBannerPannel(req, res, next) {
-	try {
-		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "bannerPannel.html"));
-	} catch (error) {
-		next(error);
-	}
-}
-
 function getBookPannel(req, res, next) {
 	try {
 		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "bookPannel.html"));
@@ -62,14 +54,12 @@ async function getBookList(req, res, next) {
 				title: book.title,
 				type: book.type,
 				keyword: book.keyword,
-				cafe: book.cafe,
 				viewCount: book.viewCount,
 				showDate: book.showAt.toISOString().substr(0, 10),
 				showTime: book.showAt.toISOString().substr(11, 5),
 				uploadDate: book.uploadDate.toISOString().substr(0, 10),
 			});
 		});
-
 		res.status(200).json({ status: "success", bookList: newBookList });
 	} catch (error) {
 		next(error);
@@ -78,7 +68,7 @@ async function getBookList(req, res, next) {
 
 async function postBookList(req, res, next) {
 	try {
-		const { title, type, keyword, cafe, showTime, showDate, uploadDate } = req.body;
+		const { title, type, keyword, showTime, showDate, uploadDate } = req.body;
 		const pdfArray = await pdf2img.convert(
 			path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`),
 			{
@@ -101,7 +91,6 @@ async function postBookList(req, res, next) {
 			title: title,
 			type: type,
 			keyword: keywordArray,
-			cafe: cafe || "https://cafe.naver.com/steamindiegame",
 			showAt: showAt,
 			uploadDate: uploadDate,
 		});
@@ -113,7 +102,7 @@ async function postBookList(req, res, next) {
 
 async function putBookList(req, res, next) {
 	try {
-		const { title, type, keyword, cafe, showTime, showDate, uploadDate } = req.body;
+		const { title, type, keyword, showTime, showDate, uploadDate } = req.body;
 		if (req.file) {
 			const pdfArray = await pdf2img.convert(
 				path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`),
@@ -140,7 +129,6 @@ async function putBookList(req, res, next) {
 				title: title,
 				type: type,
 				keyword: keywordArray,
-				cafe: cafe || "https://cafe.naver.com/steamindiegame",
 				showAt: showAt,
 				uploadDate: uploadDate,
 			}
@@ -210,7 +198,6 @@ async function postLogin(req, res, next) {
 export default {
 	getAdmin,
 	getPannel,
-	getBannerPannel,
 	getBookPannel,
 	getBookList,
 	postBookList,

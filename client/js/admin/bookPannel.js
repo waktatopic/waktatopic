@@ -47,7 +47,6 @@ async function postBookList(e) {
 			: "special"
 	);
 	formData.append("keyword", e.target["book-keyword"].value);
-	formData.append("cafe", e.target["book-cafe"].value);
 	formData.append("showTime", e.target["book-show-time"].value);
 	formData.append("showDate", e.target["book-show-date"].value);
 	formData.append("uploadDate", e.target["book-upload-date"].value);
@@ -77,7 +76,6 @@ async function putBookList(e) {
 			: "special"
 	);
 	formData.append("keyword", e.target["book-keyword"].value);
-	formData.append("cafe", e.target["book-cafe"].value);
 	formData.append("showTime", e.target["book-show-time"].value);
 	formData.append("showDate", e.target["book-show-date"].value);
 	formData.append("uploadDate", e.target["book-upload-date"].value);
@@ -157,12 +155,6 @@ async function createBookForm(method, book) {
 		<label>
 			키워드
 			<input type="text" id="book-keyword" name="book-keyword" value="${book?.keyword.join() || ""}"/>
-		</label>
-	</div>
-	<div>
-		<label>
-			카페 링크
-			<input type="text" id="book-cafe" name="book-cafe" value="${book?.cafe || ""}"/>
 		</label>
 	</div>
 	<div>
