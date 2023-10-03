@@ -36,7 +36,16 @@ async function postBookList(e) {
 	const formData = new FormData();
 	formData.append("form", "pdf");
 	formData.append("title", e.target["book-title"].value);
-	formData.append("type", e.target["book-type"].value);
+	formData.append(
+		"type",
+		e.target["book-type"].value === "주간왁물원"
+			? "weeklywak"
+			: e.target["book-type"].value === "소년왁두"
+			? "shonenwakdu"
+			: e.target["book-type"].value === "게임킹아"
+			? "gamekinga"
+			: "special"
+	);
 	formData.append("keyword", e.target["book-keyword"].value);
 	formData.append("cafe", e.target["book-cafe"].value);
 	formData.append("showTime", e.target["book-show-time"].value);
@@ -57,13 +66,22 @@ async function putBookList(e) {
 	const formData = new FormData();
 	formData.append("form", "pdf");
 	formData.append("title", e.target["book-title"].value);
-	formData.append("type", e.target["book-type"].value);
+	formData.append(
+		"type",
+		e.target["book-type"].value === "주간왁물원"
+			? "weeklywak"
+			: e.target["book-type"].value === "소년왁두"
+			? "shonenwakdu"
+			: e.target["book-type"].value === "게임킹아"
+			? "gamekinga"
+			: "special"
+	);
 	formData.append("keyword", e.target["book-keyword"].value);
 	formData.append("cafe", e.target["book-cafe"].value);
 	formData.append("showTime", e.target["book-show-time"].value);
 	formData.append("showDate", e.target["book-show-date"].value);
 	formData.append("uploadDate", e.target["book-upload-date"].value);
-	formData.append("files", e.target["book-file"].files[0]);
+	e.target["book-file"].files[0] && formData.append("files", e.target["book-file"].files[0]);
 	try {
 		const res = await axios.put("/admin/pannel/book/list", formData, {
 			headers: { "Content-Type": "multipart/form-data" },
@@ -75,7 +93,21 @@ async function putBookList(e) {
 }
 
 async function deleteBookList(e) {
-	console.log("delete");
+	const title = e.target["book-title"].value;
+	const type =
+		e.target["book-type"].value === "주간왁물원"
+			? "weeklywak"
+			: e.target["book-type"].value === "소년왁두"
+			? "shonenwakdu"
+			: e.target["book-type"].value === "게임킹아"
+			? "gamekinga"
+			: "special";
+	try {
+		const res = await axios.delete("/admin/pannel/book/list", { data: { type: type, title: title } });
+		console.log(res.data.message);
+	} catch (error) {
+		console.log(error.response.data.message);
+	}
 }
 
 async function createBookForm(method, book) {
@@ -85,19 +117,41 @@ async function createBookForm(method, book) {
 	<div>
 		<label>
 			제목
-			<input type="text" id="book-title" name="book-title" value="${book?.title || ""}" />
+			<input type="text" id="book-title" name="book-title" value="${book?.title || ""}" ${
+		method === "edit" ? "readonly" : ""
+	}/>
 		</label>
 	</div>
 	<div>
+	${
+		method === "edit"
+			? `
+	<div>
 		<label>
-			타입
-			<select id="book-type" name="book-type">
-				<option value="weeklywak">주간왁물원</option>
-				<option value="shonenwakdu">소년왁두</option>
-				<option value="gamekinga">게임킹아</option>
-				<option value="special">특집호</option>
-			</select>
+				타입
+				<input type="text" id="book-type" name="book-type" value="${
+					book.type === "weeklywak"
+						? "주간왁물원"
+						: book.type === "shonenwakdu"
+						? "소년왁두"
+						: book.type === "gamekinga"
+						? "게임킹아"
+						: "특집호"
+				}" readonly />
 		</label>
+	</div>
+			`
+			: `
+	<label>
+		타입
+		<select id="book-type" name="book-type">
+			<option value="주간왁물원">주간왁물원</option>
+			<option value="소년왁두">소년왁두</option>
+			<option value="게임킹아">게임킹아</option>
+			<option value="특집호">특집호</option>
+		</select>
+	</label>`
+	}
 	</div>
 	<div>
 		<label>
@@ -142,14 +196,22 @@ async function createBookForm(method, book) {
 	</div>
 `;
 	document.body.append(bookForm);
-	if (method !== "post") document.querySelector(`#book-edit-form option[value="${book.type}"]`).selected = true;
 	new JustValidate(`#${bookForm.id}`, { lockForm: true, validateBeforSubmitting: true })
 		.addField("#book-title", [{ rule: "required", errorMessage: "제목을 입력하세요" }])
-		.addField("#book-file", [
-			{ rule: "minFilesCount", value: 1, errorMessage: "파일을 넣어주세요" },
-			{ rule: "maxFilesCount", value: 1, errorMessage: "파일을 하나만 넣어주세요" },
-			{ rule: "files", value: { files: { extensions: ["pdf"] } }, errorMessage: "pdf파일을 넣어주세요" },
-		])
+		.addField(
+			"#book-file",
+			method === "post"
+				? [
+						{ rule: "minFilesCount", value: 1, errorMessage: "파일을 넣어주세요" },
+						{ rule: "maxFilesCount", value: 1, errorMessage: "파일을 하나만 넣어주세요" },
+						{
+							rule: "files",
+							value: { files: { extensions: ["pdf"] } },
+							errorMessage: "pdf파일을 넣어주세요",
+						},
+				  ]
+				: [{ rule: "files", value: { files: { extensions: ["pdf"] } }, errorMessage: "pdf파일을 넣어주세요" }]
+		)
 		.onSuccess(async (e) => {
 			method === "post" ? postBookList(e) : e.submitter.id === "book-put" ? putBookList(e) : deleteBookList(e);
 		});

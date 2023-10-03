@@ -114,22 +114,24 @@ async function postBookList(req, res, next) {
 async function putBookList(req, res, next) {
 	try {
 		const { title, type, keyword, cafe, showTime, showDate, uploadDate } = req.body;
-		const pdfArray = await pdf2img.convert(
-			path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`),
-			{
-				page_numbers: [1],
-				scale: 0.4,
-			}
-		);
-		fs.writeFile(
-			path.join(req.app.get("clientPath"), "src", "thumbnail", type, `${title}.png`),
-			pdfArray[0],
-			(error) => {
-				if (error) {
-					console.log(error);
+		if (req.file) {
+			const pdfArray = await pdf2img.convert(
+				path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`),
+				{
+					page_numbers: [1],
+					scale: 0.4,
 				}
-			}
-		);
+			);
+			fs.writeFile(
+				path.join(req.app.get("clientPath"), "src", "thumbnail", type, `${title}.png`),
+				pdfArray[0],
+				(error) => {
+					if (error) {
+						console.log(error);
+					}
+				}
+			);
+		}
 		const keywordArray = keyword ? keyword.split(",") : [];
 		const showAt = showDate && showTime ? Date.parse(`${showDate},${showTime}`) : Date.now();
 		const bookUpdated = await Book.findOneAndUpdate(
@@ -144,6 +146,32 @@ async function putBookList(req, res, next) {
 			}
 		);
 		res.status(200).json({ status: "success", message: `${bookUpdated} 수정 완료` });
+	} catch (error) {
+		next(error);
+	}
+}
+
+async function deleteBookList(req, res, next) {
+	try {
+		const { type, title } = req.body;
+		const book = await Book.findOneAndDelete({ type: type, title: title });
+		if (!book) {
+			const error = new CustomError("DB에서 해당 데이터를 파일을 찾을 수 없습니다");
+			throw error;
+		}
+		fs.unlink(path.join(req.app.get("clientPath"), "src", "thumbnail", type, `${title}.png`), (error) => {
+			if (error) {
+				const error = new CustomError("썸네일 파일을 찾을 수 없습니다");
+				throw error;
+			}
+		});
+		fs.unlink(path.join(req.app.get("clientPath"), "src", "pdf", type, `${title}.pdf`), (error) => {
+			if (error) {
+				const error = new CustomError("PDF 파일을 찾을 수 없습니다");
+				throw error;
+			}
+		});
+		res.status(200).json({ status: "success", message: `${book} 삭제 완료` });
 	} catch (error) {
 		next(error);
 	}
@@ -187,6 +215,7 @@ export default {
 	getBookList,
 	postBookList,
 	putBookList,
+	deleteBookList,
 	getProfilePannel,
 	postLogin,
 };

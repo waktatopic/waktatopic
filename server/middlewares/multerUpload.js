@@ -12,10 +12,11 @@ const fileStorge = multer.diskStorage({
 		cb(null, `${req.body.title}.${req.body.form}`);
 	},
 });
+
 const multerUpload = multer({
 	storage: fileStorge,
 	limits: {
-		fileSize: 50 * 1024 * 1024,
+		fileSize: 100 * 1024 * 1024,
 	},
 });
 
