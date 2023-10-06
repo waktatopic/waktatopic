@@ -9,15 +9,15 @@ import multerUpload from "../middlewares/multerUpload.js";
 const router = express.Router();
 
 router.get("/", tokenAuth, adminController.getAdmin);
-router.get("/pannel", tokenAuth, adminController.getPannel);
-router.get("/pannel/book", tokenAuth, adminController.getBookPannel);
+router.get("/dashboard", tokenAuth, adminController.getDashboard);
+router.get("/dashboard/book", tokenAuth, adminController.getBookDashboard);
 router
-	.route("/pannel/book/list")
+	.route("/dashboard/book/list")
 	.get(tokenAuth, adminController.getBookList)
 	.post(tokenAuth, multerUpload.single("files"), adminController.postBookList)
 	.put(tokenAuth, multerUpload.single("files"), adminController.putBookList)
 	.delete(tokenAuth, adminController.deleteBookList);
-router.get("/pannel/profile", tokenAuth, adminController.getProfilePannel);
+router.get("/dashboard/profile", tokenAuth, adminController.getProfileDashboard);
 router.post("/login", adminController.postLogin);
 
 export default router;

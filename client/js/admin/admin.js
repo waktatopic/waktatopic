@@ -25,7 +25,7 @@ new JustValidate("#login-form", {
 				password: password,
 			});
 			console.log(res.data.message);
-			window.location.href = "/admin/pannel";
+			window.location.href = "/admin/dashboard";
 		} catch (err) {
 			console.log(err.response.data.message);
 		}

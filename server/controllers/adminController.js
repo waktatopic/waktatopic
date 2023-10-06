@@ -21,17 +21,17 @@ function getAdmin(req, res, next) {
 	}
 }
 
-function getPannel(req, res, next) {
+function getDashboard(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "pannel.html"));
+		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "dashboard.html"));
 	} catch (error) {
 		next(error);
 	}
 }
 
-function getBookPannel(req, res, next) {
+function getBookDashboard(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "bookPannel.html"));
+		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "bookDashboard.html"));
 	} catch (error) {
 		next(error);
 	}
@@ -165,9 +165,9 @@ async function deleteBookList(req, res, next) {
 	}
 }
 
-function getProfilePannel(req, res, next) {
+function getProfileDashboard(req, res, next) {
 	try {
-		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "profilePannel.html"));
+		res.status(200).sendFile(path.join(req.app.get("clientPath"), "html", "admin", "profileDashboard.html"));
 	} catch (error) {
 		next(error);
 	}
@@ -197,12 +197,12 @@ async function postLogin(req, res, next) {
 
 export default {
 	getAdmin,
-	getPannel,
-	getBookPannel,
+	getDashboard,
+	getBookDashboard,
 	getBookList,
 	postBookList,
 	putBookList,
 	deleteBookList,
-	getProfilePannel,
+	getProfileDashboard,
 	postLogin,
 };

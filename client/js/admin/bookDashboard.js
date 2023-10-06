@@ -7,7 +7,7 @@ getBookList();
 
 async function getBookList() {
 	try {
-		const res = await axios.get("/admin/pannel/book/list");
+		const res = await axios.get("/admin/dashboard/book/list");
 		const bookList = res.data.bookList;
 		bookList.map((book) => {
 			const listItem = document.createElement("div");
@@ -52,7 +52,7 @@ async function postBookList(e) {
 	formData.append("uploadDate", e.target["book-upload-date"].value);
 	formData.append("files", e.target["book-file"].files[0]);
 	try {
-		const res = await axios.post("/admin/pannel/book/list", formData, {
+		const res = await axios.post("/admin/dashboard/book/list", formData, {
 			headers: { "Content-Type": "multipart/form-data" },
 		});
 		console.log(res.data.message);
@@ -82,7 +82,7 @@ async function putBookList(e) {
 	formData.append("uploadDate", e.target["book-upload-date"].value);
 	e.target["book-file"].files[0] && formData.append("files", e.target["book-file"].files[0]);
 	try {
-		const res = await axios.put("/admin/pannel/book/list", formData, {
+		const res = await axios.put("/admin/dashboard/book/list", formData, {
 			headers: { "Content-Type": "multipart/form-data" },
 		});
 		console.log(res.data.message);
@@ -103,7 +103,7 @@ async function deleteBookList(e) {
 			? "gamekinga"
 			: "special";
 	try {
-		const res = await axios.delete("/admin/pannel/book/list", { data: { type: type, title: title } });
+		const res = await axios.delete("/admin/dashboard/book/list", { data: { type: type, title: title } });
 		console.log(res.data.message);
 		window.location.reload(true);
 	} catch (error) {
