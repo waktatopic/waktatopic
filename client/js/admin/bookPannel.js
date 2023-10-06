@@ -56,6 +56,7 @@ async function postBookList(e) {
 			headers: { "Content-Type": "multipart/form-data" },
 		});
 		console.log(res.data.message);
+		window.location.reload(true);
 	} catch (error) {
 		console.log(error.response.data.message);
 	}
@@ -85,6 +86,7 @@ async function putBookList(e) {
 			headers: { "Content-Type": "multipart/form-data" },
 		});
 		console.log(res.data.message);
+		window.location.reload(true);
 	} catch (error) {
 		console.log(error.response.data.message);
 	}
@@ -103,6 +105,7 @@ async function deleteBookList(e) {
 	try {
 		const res = await axios.delete("/admin/pannel/book/list", { data: { type: type, title: title } });
 		console.log(res.data.message);
+		window.location.reload(true);
 	} catch (error) {
 		console.log(error.response.data.message);
 	}
@@ -190,6 +193,7 @@ async function createBookForm(method, book) {
 	document.body.append(bookForm);
 	new JustValidate(`#${bookForm.id}`, { lockForm: true, validateBeforSubmitting: true })
 		.addField("#book-title", [{ rule: "required", errorMessage: "제목을 입력하세요" }])
+		.addField("#book-upload-date", [{ rule: "required", errorMessage: "업로드 날짜를 입력하세요" }])
 		.addField(
 			"#book-file",
 			method === "post"
