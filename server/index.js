@@ -8,6 +8,13 @@ import path from "path";
 import notFound from "./middlewares/notFound.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 import cookieParser from "cookie-parser";
+import visitorSchedule from "./utils/visitorSchedule.js";
+import dbConfig from "./utils/dbConfig.js";
+
+dbConfig();
+
+visitorSchedule.visitorJob;
+visitorSchedule.trendJob;
 
 const app = express();
 

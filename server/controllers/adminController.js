@@ -6,12 +6,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import pdf2img from "pdf-img-convert";
 import fs from "fs";
-import dbConfig from "../dbConfig/dbConfig.js";
 import Admin from "../models/adminModel.js";
 import Book from "../models/bookModel.js";
 import CustomError from "../utils/CustomError.js";
-
-dbConfig();
 
 function getAdmin(req, res, next) {
 	try {
