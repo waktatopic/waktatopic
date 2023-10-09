@@ -2,6 +2,5 @@
 /client/node_modules
 /client/library/3d-flip-book/3d-flip-book/node_modules
 /client/library/3d-flip-book/common/node_modules
-/client/src
 /server/node_modules
 /server/.env
