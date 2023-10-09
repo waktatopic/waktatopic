@@ -12,9 +12,7 @@ import visitorSchedule from "./utils/visitorSchedule.js";
 import dbConfig from "./utils/dbConfig.js";
 
 dbConfig();
-
-visitorSchedule.visitorJob;
-visitorSchedule.trendJob;
+visitorSchedule();
 
 const app = express();
 

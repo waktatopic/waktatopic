@@ -21,21 +21,16 @@ async function getBook(req, res, next) {
 			if (visitor) {
 				const bookVisitor = [...visitor.book];
 				const keywordVisitor = [...visitor.keyword];
-				if (bookVisitor.some((data) => data.type === book.type && data.title === book.title)) {
-					bookVisitor.forEach((e) => {
-						if (e.type === book.type && e.title === book.title) e.viewCount = e.viewCount + 1;
-					});
-				} else {
-					bookVisitor.push({ type: book.type, title: book.title, viewCount: 1 });
-				}
+				const bookIndex = bookVisitor.findIndex((data) => data.type === book.type && data.title === book.title);
+				bookIndex !== -1
+					? (bookVisitor[bookIndex].viewCount = bookVisitor[bookIndex].viewCount + 1)
+					: bookVisitor.push({ type: book.type, title: book.title, viewCount: 1 });
+
 				book.keyword.forEach((word) => {
-					if (keywordVisitor.some((data) => data.word === word)) {
-						keywordVisitor.forEach((e) => {
-							if (e.word === word) e.viewCount = e.viewCount + 1;
-						});
-					} else {
-						keywordVisitor.push({ word: word, viewCount: 1 });
-					}
+					const keywordIndex = keywordVisitor.findIndex((data) => data.word === word);
+					keywordIndex !== -1
+						? (keywordVisitor[keywordIndex].viewCount = keywordVisitor[keywordIndex].viewCount + 1)
+						: keywordVisitor.push({ word: word, viewCount: 1 });
 				});
 				await Visitor.updateOne(
 					{
