@@ -4,7 +4,7 @@ import schedule from "node-schedule";
 import Visitor from "../models/visitorModel.js";
 import CustomError from "./CustomError.js";
 
-const visitorJob = schedule.scheduleJob("40 22 * * *", async (fireDate) => {
+const visitorJob = schedule.scheduleJob("0 0 * * *", async (fireDate) => {
 	try {
 		const visitor = await Visitor.create({
 			book: [],
