@@ -12,7 +12,7 @@ function tokenAuth(req, res, next) {
 		if (!token && path !== "/") {
 			return res.redirect("/admin");
 		} else if (token && path === "/") {
-			return res.redirect("/admin/pannel");
+			return res.redirect("/admin/dashboard");
 		} else if (!token && path === "/") {
 			return next();
 		}

@@ -4,12 +4,16 @@ import schedule from "node-schedule";
 import Visitor from "../models/visitorModel.js";
 import CustomError from "./CustomError.js";
 
-const visitorJob = schedule.scheduleJob("0 24 * * *", async (fireDate) => {
-	const visitor = await Visitor.create({
-		book: [],
-		keyword: [],
-	});
-	console.log(`Created ${visitor} document of ${fireDate}`);
+const visitorJob = schedule.scheduleJob("40 22 * * *", async (fireDate) => {
+	try {
+		const visitor = await Visitor.create({
+			book: [],
+			keyword: [],
+		});
+		console.log(`Created ${fireDate} document, ${visitor}`);
+	} catch (error) {
+		next(error);
+	}
 });
 
 const trendJob = schedule.scheduleJob("0 * * *", async (fireDate) => {
